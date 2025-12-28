@@ -1,0 +1,58 @@
+/* Donations page container */
+.donations-page {
+  padding: 24px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f6f8;
+  min-height: calc(100vh - 60px); /* subtract topbar height */
+}
+
+/* Page heading */
+.donations-page h2 {
+  font-size: 1.75rem;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+/* Verify button */
+.donations-page .verify-btn {
+  background-color: #1abc9c;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
+  margin-bottom: 15px;
+  transition: background-color 0.2s ease;
+}
+
+.donations-page .verify-btn:hover {
+  background-color: #16a085;
+}
+
+/* Table container adjustments */
+.donations-page .table-container {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+  padding: 10px;
+}
+
+/* Modal overrides if needed */
+.donations-page .modal-body {
+  font-size: 0.95rem;
+  color: #34495e;
+  line-height: 1.5;
+}
+
+/* Responsive layout */
+@media (max-width: 768px) {
+  .donations-page {
+    padding: 16px;
+  }
+  .donations-page .verify-btn {
+    width: 100%;
+    text-align: center;
+  }
+}

@@ -1,0 +1,58 @@
+/* Users page container */
+.users-page {
+  padding: 24px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f6f8;
+  min-height: calc(100vh - 60px); /* adjust for topbar height */
+}
+
+/* Page heading */
+.users-page h2 {
+  font-size: 1.75rem;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+/* Add User button */
+.users-page .add-btn {
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
+  margin-bottom: 15px;
+  transition: background-color 0.2s ease;
+}
+
+.users-page .add-btn:hover {
+  background-color: #2980b9;
+}
+
+/* Table container */
+.users-page .table-container {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+  padding: 10px;
+}
+
+/* Modal body */
+.users-page .modal-body {
+  font-size: 0.95rem;
+  color: #34495e;
+  line-height: 1.5;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .users-page {
+    padding: 16px;
+  }
+  .users-page .add-btn {
+    width: 100%;
+    text-align: center;
+  }
+}

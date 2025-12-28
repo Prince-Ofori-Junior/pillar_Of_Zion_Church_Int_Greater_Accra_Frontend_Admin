@@ -1,0 +1,158 @@
+/* Events page container */
+.events-page {
+  padding: 24px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f6f8;
+  min-height: calc(100vh - 60px); /* subtract topbar height */
+}
+
+/* Page heading */
+.events-page h2 {
+  font-size: 1.75rem;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+/* Create button */
+.events-page .create-btn {
+  background-color: #8e44ad;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
+  margin-bottom: 15px;
+  transition: background-color 0.2s ease;
+}
+
+.events-page .create-btn:hover {
+  background-color: #732d91;
+}
+
+/* Table container adjustments */
+.events-page .table-container {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+  padding: 10px;
+  overflow-x: auto;
+}
+
+/* Table thumbnail images */
+.events-page .table-container table img.thumbnail {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+/* Modal overrides */
+.events-page .modal-body {
+  font-size: 0.95rem;
+  color: #34495e;
+  line-height: 1.5;
+}
+
+/* Form inside modal */
+.events-page .event-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.events-page .event-form label {
+  margin-bottom: 12px;
+  font-weight: 500;
+  display: flex;
+  flex-direction: column;
+}
+
+.events-page .event-form input[type="text"],
+.events-page .event-form input[type="date"],
+.events-page .event-form input[type="time"],
+.events-page .event-form input[type="url"],
+.events-page .event-form textarea,
+.events-page .event-form input[type="file"] {
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-top: 4px;
+  font-size: 0.95rem;
+}
+
+.events-page .event-form textarea {
+  resize: vertical;
+}
+
+/* Submit button */
+.events-page .event-form .submit-btn {
+  background-color: #8e44ad;
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
+  margin-top: 10px;
+  transition: background-color 0.2s ease;
+}
+
+.events-page .event-form .submit-btn:hover {
+  background-color: #732d91;
+}
+
+/* Responsive layout */
+@media (max-width: 768px) {
+  .events-page {
+    padding: 16px;
+  }
+  .events-page .create-btn {
+    width: 100%;
+    text-align: center;
+  }
+  .events-page .table-container table img.thumbnail {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+
+
+
+
+/* Modal body scroll */
+.events-page .modal-body {
+  font-size: 0.95rem;
+  color: #34495e;
+  line-height: 1.5;
+  max-height: 70vh;       /* limits modal height */
+  overflow-y: auto;       /* scroll if content exceeds height */
+  padding-right: 10px;    /* avoid scrollbar overlaying content */
+}
+
+/* Form inside modal */
+.events-page .event-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;             /* spacing between fields */
+  width: 100%;
+  max-width: 500px;      /* prevent overly wide forms */
+  margin: 0 auto;        /* center horizontally */
+}
+
+/* Inputs and textarea take full width */
+.events-page .event-form input,
+.events-page .event-form textarea,
+.events-page .event-form input[type="file"] {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .events-page .event-form {
+    max-width: 100%;
+  }
+}

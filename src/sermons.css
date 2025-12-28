@@ -1,0 +1,103 @@
+/* Sermons page container */
+.sermons-page {
+  padding: 24px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f6f8;
+  min-height: calc(100vh - 60px); /* adjust for topbar */
+}
+
+/* Page heading */
+.sermons-page h2 {
+  font-size: 1.75rem;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+/* Upload button */
+.sermons-page .upload-btn {
+  background-color: #27ae60;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
+  margin-bottom: 15px;
+  transition: background-color 0.2s ease;
+}
+
+.sermons-page .upload-btn:hover {
+  background-color: #1e8449;
+}
+
+/* Table container adjustments */
+.sermons-page .table-container {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+  padding: 10px;
+}
+
+/* Modal overrides */
+.sermons-page .modal-body {
+  font-size: 0.95rem;
+  color: #34495e;
+  line-height: 1.5;
+}
+
+/* Responsive layout */
+@media (max-width: 768px) {
+  .sermons-page {
+    padding: 16px;
+  }
+  .sermons-page .upload-btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+
+.upload-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.upload-form label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: #2c3e50;
+}
+
+.upload-form input[type="text"],
+.upload-form textarea,
+.upload-form input[type="file"] {
+  margin-top: 4px;
+  padding: 6px 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 0.95rem;
+}
+
+.upload-form textarea {
+  resize: vertical;
+  min-height: 60px;
+}
+
+.submit-btn {
+  background-color: #27ae60;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.submit-btn:hover {
+  background-color: #219150;
+}

@@ -1,0 +1,36 @@
+/* Dashboard container */
+.dashboard {
+  padding: 24px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f6f8;
+  min-height: calc(100vh - 60px); /* subtract topbar height */
+}
+
+/* Dashboard heading */
+.dashboard h2 {
+  font-size: 1.75rem;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+/* Cards container inside dashboard */
+.dashboard .cards-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+/* Responsive grid for medium screens */
+@media (min-width: 600px) {
+  .dashboard .cards-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Responsive grid for large screens */
+@media (min-width: 900px) {
+  .dashboard .cards-container {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
