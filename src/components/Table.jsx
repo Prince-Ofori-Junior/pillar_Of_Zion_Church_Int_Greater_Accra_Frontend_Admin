@@ -1,10 +1,9 @@
+// src/components/Table.js
 import React from "react";
 import "../table.css";
 
 const Table = ({ columns = [], data = [] }) => {
-  // Safety check
   if (!Array.isArray(data)) {
-    console.error("Table received invalid data:", data);
     return (
       <div className="table-container">
         <p className="empty-text">No data available</p>
@@ -34,7 +33,11 @@ const Table = ({ columns = [], data = [] }) => {
             data.map((row, i) => (
               <tr key={i}>
                 {columns.map((col) => (
-                  <td key={col}>{row[col] ?? "-"}</td>
+                  <td key={col}>
+                    {React.isValidElement(row[col])
+                      ? row[col]
+                      : row[col] ?? "-"}
+                  </td>
                 ))}
               </tr>
             ))

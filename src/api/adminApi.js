@@ -30,14 +30,6 @@ if (existingToken) {
 const login = async ({ email, password }) => {
   const res = await api.post("/auth/login", { email, password });
 
-  /**
-   * EXPECTED BACKEND RESPONSE
-   * {
-   *   token: "jwt-token",
-   *   user: { id, name, role }
-   * }
-   */
-
   const { token, user } = res.data;
 
   if (token) {
@@ -62,7 +54,7 @@ const updateUser = (id, data) => api.put(`/admin/users/${id}`, data);
 const deleteUser = (id) => api.delete(`/admin/users/${id}`);
 
 // =====================
-// SERMONS
+// SERMONS  ✅ FIXED
 // =====================
 const getSermons = () => api.get("/admin/sermons");
 
@@ -71,18 +63,26 @@ const uploadSermon = (data) =>
     headers: { "Content-Type": "multipart/form-data" },
   });
 
+const updateSermon = (id, data) =>
+  api.put(`/admin/sermons/${id}`, data, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+
 const deleteSermon = (id) =>
   api.delete(`/admin/sermons/${id}`);
-
 // =====================
 // EVENTS
 // =====================
-// =====================
-// EVENTS
-// =====================
-const getEvents = () => api.get("/events/admin");      // <- updated
-const createEvent = (data) => api.post("/events/admin", data); // <- updated
-const deleteEvent = (id) => api.delete(`/events/admin/${id}`); // optional for future
+const getEvents = () => api.get("/events/admin");
+const createEvent = (data) =>
+  api.post("/events/admin", data, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+const updateEvent = (id, data) =>
+  api.put(`/events/admin/${id}`, data, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+const deleteEvent = (id) => api.delete(`/events/admin/${id}`);
 
 // =====================
 // PRAYERS
@@ -101,8 +101,7 @@ const verifyDonation = (id) =>
 // =====================
 // DASHBOARD
 // =====================
-const getDashboardStats = () =>
-  api.get("/admin/dashboard");
+const getDashboardStats = () => api.get("/admin/dashboard");
 
 export default {
   login,
@@ -113,9 +112,11 @@ export default {
   deleteUser,
   getSermons,
   uploadSermon,
+  updateSermon,
   deleteSermon,
   getEvents,
   createEvent,
+  updateEvent,  // ✅ added
   deleteEvent,
   getPrayers,
   approvePrayer,

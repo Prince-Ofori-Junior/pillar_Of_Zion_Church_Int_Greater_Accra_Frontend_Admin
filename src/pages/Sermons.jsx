@@ -9,46 +9,80 @@ const Sermons = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [editingId, setEditingId] = useState(null);
 
-  // ✅ ADDED youtubeLiveUrl
   const [formData, setFormData] = useState({
     title: "",
     description: "",
     file: null,
-    youtubeLiveUrl: ""
+    youtubeLiveUrl: "",
   });
 
   useEffect(() => {
     fetchSermons();
   }, []);
 
+  // =====================
+  // FETCH SERMONS
+  // =====================
   const fetchSermons = async () => {
     try {
       setLoading(true);
-      setError("");
       const res = await adminApi.getSermons();
       setSermons(Array.isArray(res.data.sermons) ? res.data.sermons : []);
+      setError("");
     } catch (err) {
-      console.error("Fetch sermons error:", err);
+      console.error(err);
       setError("Failed to load sermons.");
     } finally {
       setLoading(false);
     }
   };
 
+  // =====================
+  // FORM HANDLER
+  // =====================
   const handleChange = (e) => {
     const { name, files, value } = e.target;
-    if (files) {
-      setFormData(prev => ({ ...prev, file: files[0] }));
-    } else {
-      setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({
+      ...prev,
+      [name]: files ? files[0] : value,
+    }));
+  };
+
+  // =====================
+  // EDIT SERMON
+  // =====================
+  const handleEdit = (sermon) => {
+    setEditingId(sermon.id);
+    setFormData({
+      title: sermon.title || "",
+      description: sermon.description || "",
+      file: null,
+      youtubeLiveUrl: sermon.social_streams?.[0] || "",
+    });
+    setShowModal(true);
+  };
+
+  // =====================
+  // DELETE SERMON
+  // =====================
+  const handleDelete = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this sermon?")) return;
+
+    try {
+      await adminApi.deleteSermon(id);
+      fetchSermons();
+    } catch (err) {
+      alert("Failed to delete sermon.");
     }
   };
 
+  // =====================
+  // SUBMIT (UPLOAD / UPDATE)
+  // =====================
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // ❌ FILE IS NO LONGER REQUIRED (Live-only sermon allowed)
     if (!formData.title) return alert("Title is required");
 
     try {
@@ -60,7 +94,6 @@ const Sermons = () => {
         data.append("file", formData.file);
       }
 
-      // ✅ SEND YOUTUBE LIVE URL TO BACKEND
       if (formData.youtubeLiveUrl) {
         data.append(
           "socialStreams",
@@ -68,31 +101,39 @@ const Sermons = () => {
         );
       }
 
-      await adminApi.uploadSermon(data);
-      setShowModal(false);
+      if (editingId) {
+        await adminApi.updateSermon(editingId, data);
+      } else {
+        await adminApi.uploadSermon(data);
+      }
 
-      setFormData({
-        title: "",
-        description: "",
-        file: null,
-        youtubeLiveUrl: ""
-      });
-
+      resetForm();
       fetchSermons();
     } catch (err) {
-      console.error("Upload error:", err);
-      alert("Failed to upload sermon.");
+      console.error(err);
+      alert("Failed to save sermon.");
     }
+  };
+
+  // =====================
+  // RESET FORM
+  // =====================
+  const resetForm = () => {
+    setEditingId(null);
+    setShowModal(false);
+    setFormData({
+      title: "",
+      description: "",
+      file: null,
+      youtubeLiveUrl: "",
+    });
   };
 
   return (
     <div className="sermons-page">
       <div className="page-header">
         <h2>Manage Sermons</h2>
-        <button
-          className="upload-btn"
-          onClick={() => setShowModal(true)}
-        >
+        <button className="upload-btn" onClick={() => setShowModal(true)}>
           Upload Sermon
         </button>
       </div>
@@ -101,13 +142,37 @@ const Sermons = () => {
       {error && <p className="error-text">{error}</p>}
 
       {!loading && !error && (
-        <Table columns={["id", "title", "date"]} data={sermons} />
+        <Table
+          columns={["id", "title", "date", "actions"]}
+          data={sermons.map((s) => ({
+            ...s,
+            actions: (
+              <>
+                <button
+                  className="edit-btn"
+                  onClick={() => handleEdit(s)}
+                >
+                  Edit
+                </button>
+                <button
+                  className="delete-btn"
+                  onClick={() => handleDelete(s.id)}
+                >
+                  Delete
+                </button>
+              </>
+            ),
+          }))}
+        />
       )}
 
+      {/* ===================== */}
+      {/* MODAL */}
+      {/* ===================== */}
       <Modal
         isOpen={showModal}
-        onClose={() => setShowModal(false)}
-        title="Upload Sermon"
+        onClose={resetForm}
+        title={editingId ? "Edit Sermon" : "Upload Sermon"}
       >
         <form onSubmit={handleSubmit} className="upload-form">
           <label>
@@ -140,26 +205,25 @@ const Sermons = () => {
             />
           </label>
 
-          {/* 🔴 YOUTUBE LIVE INPUT */}
           <label>
             YouTube Live URL (optional)
             <input
               type="url"
               name="youtubeLiveUrl"
-              placeholder="https://www.youtube.com/live/XXXX"
               value={formData.youtubeLiveUrl}
               onChange={handleChange}
+              placeholder="https://www.youtube.com/live/XXXX"
             />
           </label>
 
           <div className="modal-actions">
             <button type="submit" className="submit-btn">
-              Upload
+              {editingId ? "Update" : "Upload"}
             </button>
             <button
               type="button"
               className="cancel-btn"
-              onClick={() => setShowModal(false)}
+              onClick={resetForm}
             >
               Cancel
             </button>
@@ -171,4 +235,3 @@ const Sermons = () => {
 };
 
 export default Sermons;
-  
